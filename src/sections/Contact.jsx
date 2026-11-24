@@ -1,30 +1,6 @@
 import { motion } from "framer-motion"
-import { useRef, useState } from "react"
-import emailjs from "@emailjs/browser"
 
 export default function Contact() {
-  const formRef = useRef()
-  const [status, setStatus] = useState("idle")
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setStatus("loading")
-
-    try {
-      await emailjs.sendForm(
-        "service_84wazsf",
-        "template_brymiib",
-        formRef.current,
-        "PhwOWdBp1oxojCt5z"
-      )
-      setStatus("success")
-      formRef.current.reset()
-    } catch (err) {
-      console.error(err)
-      setStatus("error")
-    }
-  }
-
   return (
     <section id="contact" className="py-32 px-6">
       <div className="max-w-6xl mx-auto">
@@ -41,7 +17,7 @@ export default function Contact() {
           <div className="flex-1 h-px bg-white/10 ml-4" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -75,65 +51,6 @@ export default function Contact() {
                 ALEXIAAAA794
               </a>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <form ref={formRef} onSubmit={handleSubmit} className="card-glass rounded-3xl p-8 space-y-5">
-              <div>
-                <label className="text-xs text-white/30 tracking-widest uppercase block mb-2">Nom</label>
-                <input
-                  type="text"
-                  name="from_name"
-                  required
-                  placeholder="Ton nom"
-                  className="w-full bg-white/5 border border-white/8 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/40 transition-colors text-sm"
-                />
-              </div>
-              <div>
-                <label className="text-xs text-white/30 tracking-widest uppercase block mb-2">Email</label>
-                <input
-                  type="email"
-                  name="from_email"
-                  required
-                  placeholder="ton@email.com"
-                  className="w-full bg-white/5 border border-white/8 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/40 transition-colors text-sm"
-                />
-              </div>
-              <div>
-                <label className="text-xs text-white/30 tracking-widest uppercase block mb-2">Message</label>
-                <textarea
-                  rows={4}
-                  name="message"
-                  required
-                  placeholder="Decris ton projet..."
-                  className="w-full bg-white/5 border border-white/8 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-accent/40 transition-colors text-sm resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="w-full bg-accent text-black font-bold py-3.5 rounded-xl hover:bg-white transition-all duration-300 hover:scale-[1.02] font-display tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {status === "loading" ? "Envoi en cours..." : "Envoyer"}
-              </button>
-
-              {status === "success" && (
-                <p className="text-center text-sm text-green-400">
-                  Message envoye avec succes !
-                </p>
-              )}
-              {status === "error" && (
-                <p className="text-center text-sm text-red-400">
-                  Une erreur s'est produite. Reessaie.
-                </p>
-              )}
-            </form>
           </motion.div>
         </div>
       </div>
